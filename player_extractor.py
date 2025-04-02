@@ -1,0 +1,44 @@
+import os
+from ultralytics import YOLO
+import cv2
+
+# initialisation for image path, YOLO model result and input image patch
+image_path = "dataset/original_images/img10.jpg" 
+
+# load trained YOLO model for detecting players. 
+model = YOLO("YOLOV8N_BEST.pt")
+
+# player class id = 2 because the model also detects goalkeepers, referees and footballs. 
+PLAYER_CLASS_ID = 2
+
+# store results from YOLO and image to extract cropped player images
+results = model(image_path)
+input_image = cv2.imread(image_path)
+
+# Define the class ID or name for player 
+player_class_id = None
+for cls_id, cls_name in model.names.items():
+    if cls_name.lower() == "player":  
+        player_class_id = cls_id
+        break
+
+# Create the "team_selection" folder if it doesn't exist
+output_folder = "dataset/extracted_players/white_team_vs_blue_and_black_team"
+os.makedirs(output_folder, exist_ok=True) 
+
+# Process the detected bounding boxes
+for r in results:
+    for i, box in enumerate(r.boxes):  # Access bounding boxes
+        class_id = int(box.cls[0])  # Class ID for the detection
+        if class_id == PLAYER_CLASS_ID:  # Only process "player" detections
+            xyxy = box.xyxy[0].tolist()  # Get bounding box coordinates [x_min, y_min, x_max, y_max]
+            x_min, y_min, x_max, y_max = map(int, xyxy)  # Convert to integers
+
+            # Crop the bounding box from the original image
+            cropped_image = input_image[y_min:y_max, x_min:x_max]
+
+            # Save the cropped image
+            cropped_image_path = os.path.join(output_folder, f"cropped_player_{i}.jpg")
+            cv2.imwrite(cropped_image_path, cropped_image)
+
+            print(f"Cropped player image saved at: {cropped_image_path}")
