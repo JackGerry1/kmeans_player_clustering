@@ -144,6 +144,11 @@ def main(folder_path):
     
     team_assigner.assign_team_colour(player_images)
 
+    print("\n=== Team Colors Identified ===")
+    print(f"Team 1 Color: {team_assigner.team_colours[1]}")
+    print(f"Team 2 Color: {team_assigner.team_colours[2]}")
+    print("==============================\n")
+
     player_teams = {}
     player_colours = {}
 
@@ -152,6 +157,7 @@ def main(folder_path):
         team_id = team_assigner.get_player_team(image, idx)
         player_teams[filename] = team_id
         player_colours[filename] = player_colour
+        print(f"Player {filename} - Extracted Color: {player_colour} - Assigned to Team {team_id}")
         
     # Visualise results
     visualise_results(player_images, filenames, player_teams, player_colours, team_assigner.team_colours)
