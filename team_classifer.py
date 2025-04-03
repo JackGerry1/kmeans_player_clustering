@@ -107,7 +107,7 @@ class TeamAssigner:
 
         # Get the dominant colour for the player's cluster
         player_colour = np.flip(kmeans.cluster_centers_[player_cluster]).astype(int)
-        
+        return player_colour
         # Enhance the colour and return it. 
         return self.enhance_colour(player_colour)
 
@@ -225,7 +225,8 @@ def visualise_results(player_images, filenames, player_teams, player_colours, te
         # Add an empty subplot below to align structure
         axes[1, num_players + j].axis("off")
 
-    # show plot. 
+    # show plot with title. 
+    plt.suptitle("K-Means Player Team Classification Results", fontsize=14, fontweight='bold')
     plt.tight_layout()
     plt.show()
 
@@ -262,11 +263,16 @@ def scatter_plot_kmeans(player_colours, centroids):
         ax.scatter(*np_centroid, color=np_centroid / 255, marker='X', s=200, edgecolor='black')
         print(np_centroid)
 
+    # tick labels are in increments of 50 up to 255.
+    ax.set_xticks([0, 50, 100, 150, 200, 255])
+    ax.set_yticks([0, 50, 100, 150, 200, 255])
+    ax.set_zticks([0, 50, 100, 150, 200, 255])
+
     # display labels and show plot
     ax.set_xlabel('Red')
     ax.set_ylabel('Green')
     ax.set_zlabel('Blue')
-    ax.set_title("Player Shirt Colors - K-Means Clusters")
+    ax.set_title("Player Shirt Colours - K-Means Clusters")
     plt.show()
 
 
@@ -320,5 +326,5 @@ def main(folder_path):
 
 # allow user to choose folder of players they want to cluster. 
 if __name__ == "__main__":
-    folder_path = "dataset/extracted_players/light_blue_team_vs_blue_team"  
+    folder_path = "dataset/extracted_players/white_team_vs_black_team"  
     main(folder_path)
