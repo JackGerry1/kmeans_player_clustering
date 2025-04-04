@@ -200,7 +200,7 @@ def visualise_results(player_images, filenames, player_teams, player_colours, te
 
     num_players = len(player_images)
     
-    # Create a grid: 2 rows (Players & Shirt Colors) + 1 row for Team Colors
+    # Create a grid: 2 rows (Players & Shirt Colours) + 1 row for Team Colours
     _, axes = plt.subplots(2, num_players + 2, figsize=(15, 4))  
     print(f"PLAYER Len: {len(player_images)}")
     
@@ -294,9 +294,9 @@ def main(folder_path):
     team_assigner.assign_team_colour(player_images)
 
     #print team information. 
-    print("\n=== Team Colors Identified ===")
-    print(f"Team 1 Color: {team_assigner.team_colours[1]}")
-    print(f"Team 2 Color: {team_assigner.team_colours[2]}")
+    print("\n=== Team Colours Identified ===")
+    print(f"Team 1 Colour: {team_assigner.team_colours[1]}")
+    print(f"Team 2 Colour: {team_assigner.team_colours[2]}")
     print("==============================\n")
 
     # empty player_teams and player_colours dictionary. 
@@ -318,7 +318,7 @@ def main(folder_path):
         player_colours[filename] = player_colour
         
         
-        print(f"Player {filename} - Extracted Color: {player_colour} - Assigned to Team {team_id}")
+        print(f"Player {filename} - Extracted Colour: {player_colour} - Assigned to Team {team_id}")
         
     # Visualise results
     visualise_results(player_images, filenames, player_teams, player_colours, team_assigner.team_colours)
@@ -326,5 +326,5 @@ def main(folder_path):
 
 # allow user to choose folder of players they want to cluster. 
 if __name__ == "__main__":
-    folder_path = "dataset/extracted_players/white_team_vs_black_team"  
+    folder_path = "dataset/extracted_players/red_team_vs_green_team"  
     main(folder_path)
