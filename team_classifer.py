@@ -47,7 +47,8 @@ class TeamAssigner:
         image_2d = image.reshape(-1, 3)
 
         # Perform K-means clustering with 2 clusters
-        kmeans = KMeans(n_clusters=2, init="k-means++", n_init=1)
+        kmeans = KMeans(n_clusters=2, init="k-means++", n_init=1) # using K-means++
+        #kmeans = KMeans(n_clusters=2, init="random", n_init=1) # default K-means
         kmeans.fit(image_2d)
         
         return kmeans
@@ -82,17 +83,16 @@ class TeamAssigner:
             Enhanced Colour for each of the players. 
         """
         # resize the image for consistency
-        image_resized = cv2.resize(image, (64, 64))
+        #image_resized = cv2.resize(image, (64, 64))
 
         # extract top half of image because that is where the shirt colour is
-        top_half_image = image_resized[:image_resized.shape[0] // 2, :]
+        top_half_image = image[:image.shape[0] // 2, :]
         
         # Get clustering model
         kmeans = self.get_clustering_model(top_half_image)
         
         # Get the cluster labels for each pixel
         labels = kmeans.labels_
-
 
         # reshape the labels into the orginal image shape
         clustered_image = labels.reshape(top_half_image.shape[:2])
@@ -107,7 +107,7 @@ class TeamAssigner:
 
         # Get the dominant colour for the player's cluster
         player_colour = np.flip(kmeans.cluster_centers_[player_cluster]).astype(int)
-        return player_colour
+        #return player_colour
         # Enhance the colour and return it. 
         return self.enhance_colour(player_colour)
 
@@ -125,7 +125,8 @@ class TeamAssigner:
         player_colours = [self.get_player_colour(image) for image in player_images]
         
         # perform k-means clustering to classify players into two teams
-        kmeans = KMeans(n_clusters=2, init="k-means++", n_init="auto")
+        kmeans = KMeans(n_clusters=2, init="k-means++", n_init="auto") # k-means ++
+        #kmeans = KMeans(n_clusters=2, init="random", n_init="auto") # default random
         kmeans.fit(player_colours)
 
         # assign players into two teams.
@@ -326,5 +327,11 @@ def main(folder_path):
 
 # allow user to choose folder of players they want to cluster. 
 if __name__ == "__main__":
-    folder_path = "dataset/extracted_players/red_team_vs_green_team"  
-    main(folder_path)
+    dataset_folder = "dataset/extracted_players"
+
+    # Loop through all subfolders in the base directory
+    for folder_name in os.listdir(dataset_folder):
+        folder_path = os.path.join(dataset_folder, folder_name)
+        
+        print(f"\n\n=== Processing Folder: {folder_name} ===")
+        main(folder_path)
