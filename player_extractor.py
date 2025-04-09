@@ -3,7 +3,7 @@ from ultralytics import YOLO
 import cv2
 
 # initialisation for image path, YOLO model result and input image patch
-image_path = "dataset/original_images/img10.jpg" 
+image_path = "dataset/original_images/img12.jpg" 
 
 # load trained YOLO model for detecting players. 
 model = YOLO("YOLOV8N_BEST.pt")
@@ -23,7 +23,7 @@ for cls_id, cls_name in model.names.items():
         break
 
 # Create the "team_selection" folder if it doesn't exist
-output_folder = "dataset/extracted_players/white_team_vs_blue_and_black_team"
+output_folder = "dataset/extracted_players/shadow"
 os.makedirs(output_folder, exist_ok=True) 
 
 # Process the detected bounding boxes
