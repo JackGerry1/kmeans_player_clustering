@@ -339,19 +339,33 @@ def main(folder_path):
     visualise_results(player_images, filenames, player_teams, player_colours, team_assigner.team_colours)
     scatter_plot_kmeans(player_colours, team_assigner.team_colours)
 
-# allow user to choose folder of players they want to cluster. 
 if __name__ == "__main__":
-    dataset_folder = "dataset/extracted_players/"
 
-    # Loop through all subfolders in the base directory
-    for folder_name in os.listdir(dataset_folder):
-        folder_path = os.path.join(dataset_folder, folder_name)
+    # Define the base directory containing all extracted player folders
+    base_folder = "dataset/extracted_players/"
 
-        # check for valid folder
-        if os.path.isdir(folder_path): 
-            print(f"\n\n=== Processing Folder: {folder_name} ===")
-            main(folder_path)
+    # Prompt the user to choose how they want to run the program
+    print("Would you like to:")
+    print("1. Process all folders in the dataset")
+    print("2. Process a single specified folder")
+    choice = input("Enter 1 or 2: ")
+    
+    # Option 1: Iterate through every folder within the base directory
+    if choice == "1":
+        for folder_name in os.listdir(base_folder):
+            folder_path = os.path.join(base_folder, folder_name)
 
-        # catch any errors. 
-        else: 
-            print(f"error processing folders, please make sure folder path is valid")
+            # Check if the item is a directory (i.e. a valid folder)
+            if os.path.isdir(folder_path):
+                print(f"\n\n=== Processing Folder: {folder_name} ===")
+                main(folder_path)
+    
+    # Option 2: Hardcoded path to a specific folder (can be adjusted or extended to take input)
+    elif choice == "2":    
+        folder_path = "dataset/extracted_players/red_team_vs_green_team"
+        print(f"\n=== Processing Folder: {folder_path} ===")
+        main(folder_path)
+    
+    else:
+        # Catch any invalid user inputs
+        print("Invalid input. Please enter 1 or 2.")
