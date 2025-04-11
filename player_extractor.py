@@ -1,3 +1,9 @@
+'''
+References: 
+Ultralytics (2024). Predict - YOLOv8 Docs. [online] Ultralytics. 
+Available at: https://docs.ultralytics.com/modes/predict/ [Accessed 1st april 2025].
+'''
+
 import os
 from ultralytics import YOLO
 import cv2
@@ -22,7 +28,7 @@ for cls_id, cls_name in model.names.items():
         player_class_id = cls_id
         break
 
-# Create the "team_selection" folder if it doesn't exist
+# Create the desired folder if it doesn't exist
 output_folder = "dataset/extracted_players/shadow"
 os.makedirs(output_folder, exist_ok=True) 
 

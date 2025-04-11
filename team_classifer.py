@@ -1,7 +1,7 @@
 '''
 References: 
 Tarek, A. (2024). Football_Analysis Team Analysis Code. [online] GitHub. 
-Available at: https://github.com/abdullahtarek/football_analysis/blob/main/team_assigner/team_assigner.py [Accessed 11 Dec. 2024].
+Available at: https://github.com/abdullahtarek/football_analysis/blob/main/team_assigner/team_assigner.py [Accessed april 2nd 2025].
 
 https://matplotlib.org/stable/gallery/mplot3d/scatter3d.html#sphx-glr-gallery-mplot3d-scatter3d-py accesed april 2nd 2025
 https://medium.com/@fatimahk_26822/read-and-displaying-multiple-images-in-python-ac6f9be638ef accessed april 2nd 2025. 
