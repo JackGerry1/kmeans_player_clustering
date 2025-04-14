@@ -8,6 +8,7 @@ https://medium.com/@fatimahk_26822/read-and-displaying-multiple-images-in-python
 
 '''
 
+# Import packages for numerical operations, 3D scatter plots, K-means clustering, image processing, and file path handling 
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans

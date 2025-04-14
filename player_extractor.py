@@ -4,6 +4,7 @@ Ultralytics (2024). Predict - YOLOv8 Docs. [online] Ultralytics.
 Available at: https://docs.ultralytics.com/modes/predict/ [Accessed 1st april 2025].
 '''
 
+# import libraies for YOLO model, folder paths and opening images. 
 import os
 from ultralytics import YOLO
 import cv2
