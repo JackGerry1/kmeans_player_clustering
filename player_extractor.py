@@ -21,29 +21,26 @@ PLAYER_CLASS_ID = 2
 results = model(image_path)
 input_image = cv2.imread(image_path)
 
-# Define the class ID or name for player 
-player_class_id = None
-for cls_id, cls_name in model.names.items():
-    if cls_name.lower() == "player":  
-        player_class_id = cls_id
-        break
-
 # Create the desired folder if it doesn't exist
-output_folder = "dataset/extracted_players/shadow"
+output_folder = "dataset/extracted_players/test"
 os.makedirs(output_folder, exist_ok=True) 
 
 # Process the detected bounding boxes
 for r in results:
-    for i, box in enumerate(r.boxes):  # Access bounding boxes
-        class_id = int(box.cls[0])  # Class ID for the detection
-        if class_id == PLAYER_CLASS_ID:  # Only process "player" detections
-            xyxy = box.xyxy[0].tolist()  # Get bounding box coordinates [x_min, y_min, x_max, y_max]
-            x_min, y_min, x_max, y_max = map(int, xyxy)  # Convert to integers
+    # Access bounding boxes
+    for i, box in enumerate(r.boxes):  
+        class_id = int(box.cls[0])
+
+        # Only process "player" detections based on class_id 
+        if class_id == PLAYER_CLASS_ID:  
+            # Extract bounding box coordinates and convert to integers. 
+            xyxy = box.xyxy[0].tolist()  
+            x_min, y_min, x_max, y_max = map(int, xyxy) 
 
             # Crop the bounding box from the original image
             cropped_image = input_image[y_min:y_max, x_min:x_max]
 
-            # Save the cropped image
+            # Save the cropped image and print confirmation message.
             cropped_image_path = os.path.join(output_folder, f"cropped_player_{i}.jpg")
             cv2.imwrite(cropped_image_path, cropped_image)
 
