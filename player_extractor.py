@@ -4,7 +4,7 @@ Ultralytics (2024). Predict - YOLOv8 Docs. [online] Ultralytics.
 Available at: https://docs.ultralytics.com/modes/predict/ [Accessed 1st april 2025].
 '''
 
-# import libraies for YOLO model, folder paths and opening images. 
+# import libraies for YOLO model, folder paths and opening images
 import os
 from ultralytics import YOLO
 import cv2
@@ -23,7 +23,7 @@ results = model(image_path)
 input_image = cv2.imread(image_path)
 
 # Create the desired folder if it doesn't exist
-output_folder = "dataset/extracted_players/test"
+output_folder = "dataset/extracted_players/shadow"
 os.makedirs(output_folder, exist_ok=True) 
 
 # Process the detected bounding boxes

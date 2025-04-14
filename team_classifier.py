@@ -119,11 +119,11 @@ class TeamAssigner:
 
         # EARLY RETURN OPTION:
         # If you do NOT want to use enhancement, return player_colour directly:
-        # return player_colour
+        return player_colour
 
         # ENHANCEMENT OPTION:
         # Strengthen primary shirt colour (e.g., make red shirts more "red")
-        return self.enhance_colour(player_colour)
+        #return self.enhance_colour(player_colour)
 
     def assign_team_colour(self, player_images):
         """
@@ -161,10 +161,7 @@ class TeamAssigner:
         Outputs:
             Team_id for each player. 
         """
-        # If already assigned, return the team
-        if player_id in self.player_team_dict:
-            return self.player_team_dict[player_id]
-
+        
         # if player is not assigned extract their shirt 
         player_colour = self.get_player_colour(image)
 
@@ -215,12 +212,11 @@ def visualise_results(player_images, filenames, player_teams, player_colours, te
         Outputs:
             a plot of players showing their predicted shirt colours, which team they have been assigned, compared to the predicted team colours. 
     """
-
+    # figure out the number of player images needed for the plot
     num_players = len(player_images)
     
     # Create a grid: 2 rows (Players & Shirt Colours) + 1 row for Team Colours
     _, axes = plt.subplots(2, num_players + 2, figsize=(15, 4))  
-    print(f"PLAYER Len: {len(player_images)}")
     
     # Display player images with labels (First row)
     for i, (img, filename) in enumerate(zip(player_images, filenames)):
@@ -262,8 +258,6 @@ def scatter_plot_kmeans(player_colours, centroids):
     fig = plt.figure()
     ax = fig.add_subplot(projection='3d')
 
-    print(f"player_colours length: {len(player_colours)}")
-
     # for each colour in player colours plot onto 3D scatterplot. 
     for _, colour in player_colours.items(): 
         red, green, blue = colour  
@@ -294,7 +288,7 @@ def scatter_plot_kmeans(player_colours, centroids):
     plt.show()
 
 
-def main(folder_path):
+def run_team_classifier(folder_path):
     """
         runs the team extractor on a folder of images 
 
@@ -341,7 +335,6 @@ def main(folder_path):
     scatter_plot_kmeans(player_colours, team_assigner.team_colours)
 
 if __name__ == "__main__":
-
     # Define the base directory containing all extracted player folders
     base_folder = "dataset/extracted_players/"
 
@@ -350,7 +343,7 @@ if __name__ == "__main__":
     print("1. Process all folders in the dataset")
     print("2. Process a single specified folder")
     choice = input("Enter 1 or 2: ")
-    
+
     # Option 1: Iterate through every folder within the base directory
     if choice == "1":
         for folder_name in os.listdir(base_folder):
@@ -359,14 +352,14 @@ if __name__ == "__main__":
             # Check if the item is a directory (i.e. a valid folder)
             if os.path.isdir(folder_path):
                 print(f"\n\n=== Processing Folder: {folder_name} ===")
-                main(folder_path)
-    
+                run_team_classifier(folder_path)
+
     # Option 2: Hardcoded path to a specific folder (can be adjusted or extended to take input)
     elif choice == "2":    
-        folder_path = "dataset/extracted_players/red_team_vs_green_team"
+        folder_path = "dataset/extracted_players/yellow_team_vs_white_team"
         print(f"\n=== Processing Folder: {folder_path} ===")
-        main(folder_path)
-    
+        run_team_classifier(folder_path)
+
+    # Catch any invalid user inputs
     else:
-        # Catch any invalid user inputs
         print("Invalid input. Please enter 1 or 2.")
