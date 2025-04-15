@@ -93,7 +93,7 @@ class TeamAssigner:
         image_resized = cv2.resize(image, (64, 64))
         top_half_image = image_resized[:image_resized.shape[0] // 2, :]
 
-        # OPTION 2 (currently used): Use original image size (may be inconsistent but retains detail)
+        # OPTION 2: Use original image size (may be inconsistent but retains detail)
         # Extract top half of the image containing the shirt)
         #top_half_image = image[:image.shape[0] // 2, :]
         
